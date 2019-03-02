@@ -6,6 +6,8 @@ jdk:
 scala:
   - 2.12.8
 before_script:
+  - cp -f src/test/resources/application.travis.conf src/test/resources/application.conf
+  - cp -f src/test/resources/application.travis.conf src/main/resources/application.conf
   - psql -c 'create database whosin_test;' -U postgres
   - sbt ++$TRAVIS_SCALA_VERSION test:flywayMigrate
 script:
