@@ -1,0 +1,15 @@
+addons:
+  postgresql: "9.6"
+language: scala
+jdk:
+  - oraclejdk8
+scala:
+  - 2.12.8
+before_script:
+  - psql -c 'create database whosin_test;' -U postgres
+  - sbt ++$TRAVIS_SCALA_VERSION test:flywayMigrate
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION test
+branches:
+  only:
+    - master
