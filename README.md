@@ -78,7 +78,7 @@ Refer to the original [WhosInBot](https://github.com/col/whos_in_bot/blob/master
 
         sbt assembly
 
-    The standalone JAR will be generated at `target/scala-2.12/WhosInBot-Scala-assembly-0.1.jar`.
+    This also runs unit tests by default. The standalone JAR will be generated at `target/scala-2.12/WhosInBot-Scala.jar`.
     
 4. Apply database migrations:
 
@@ -86,6 +86,6 @@ Refer to the original [WhosInBot](https://github.com/col/whos_in_bot/blob/master
         
 5. Run the app:        
        
-        java -jar target/scala-2.12/WhosInBot-Scala-assembly-0.1.jar
+        java -jar target/scala-2.12/WhosInBot-Scala.jar
         
         
