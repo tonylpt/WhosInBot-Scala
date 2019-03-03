@@ -6,6 +6,7 @@ mainClass in assembly := Some("com.whosin.Main")
 assemblyJarName in assembly := "WhosInBot-Scala.jar"
 
 parallelExecution in Test := false
+updateOptions := updateOptions.value.withCachedResolution(true)
 
 scalacOptions ++= Seq(
   "-encoding", "utf8",
