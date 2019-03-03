@@ -26,7 +26,7 @@ class ChatActorTest extends BaseActorTest("ChatActorTest") with MockFactory {
   val response2: RollCallResponse = createForResponse("User 1", Out, "won't come", callId)
   val rollCallResponses = List(response1, response2)
 
-  val databaseError = new Exception("database error")
+  val databaseError = new Exception("mock error, please ignore")
 
   var rollCallRepo: RollCallRepo = _
   var rollCallResponseRepo: RollCallResponseRepo = _
