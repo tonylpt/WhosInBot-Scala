@@ -70,18 +70,22 @@ Refer to the original [WhosInBot](https://github.com/col/whos_in_bot/blob/master
 
 ### Run from JAR
 1. Make sure `src/main/resources/application.conf` has the correct values.
-2. Build the JAR:
+2. Make sure the test database is running with migrations applied:
+
+        sbt test:flywayMigrate
+        
+3. Build the JAR:
 
         sbt assembly
 
-    The standalone JAR will be generated at `target/scala-2.12/whosin_akka-assembly-0.1.jar`.
+    The standalone JAR will be generated at `target/scala-2.12/WhosInBot-Scala-assembly-0.1.jar`.
     
-3. Apply database migrations:
+4. Apply database migrations:
 
         sbt flywayMigrate
         
-4. Run the app:        
+5. Run the app:        
        
-        java -jar target/scala-2.12/whosin_akka-assembly-0.1.jar
+        java -jar target/scala-2.12/WhosInBot-Scala-assembly-0.1.jar
         
         

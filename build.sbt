@@ -1,4 +1,4 @@
-name := "whosin_akka"
+name := "WhosInBot-Scala"
 version := "0.1"
 scalaVersion := "2.12.8"
 
