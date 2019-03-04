@@ -17,6 +17,8 @@ COPY build.sbt .
 COPY project project
 RUN sbt update
 
+# This could be improved with multi-stage build to reduce the final image size, which would require a seperate
+# image for running database migration with SBT.
 COPY . .
 RUN sbt 'set test in assembly := {}' clean assembly \
     && cp -f target/scala-2.12/WhosInBot-Scala.jar .
