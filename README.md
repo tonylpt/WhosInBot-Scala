@@ -61,7 +61,7 @@ Refer to the original [WhosInBot](https://github.com/col/whos_in_bot/blob/master
         
 3. Run tests:
 
-        sbt run
+        sbt test
         
 4. Run the app locally:
 
