@@ -11,7 +11,9 @@ before_script:
   - psql -c 'create database whosin_test;' -U postgres
   - sbt ++$TRAVIS_SCALA_VERSION test:flywayMigrate
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION test
+  - sbt ++$TRAVIS_SCALA_VERSION clean coverage test coverageReport
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 branches:
   only:
     - master
