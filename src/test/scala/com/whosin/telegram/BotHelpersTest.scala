@@ -5,7 +5,6 @@ import com.bot4s.telegram.clients.AkkaHttpClient
 import com.bot4s.telegram.methods.ParseMode.ParseMode
 import com.bot4s.telegram.models._
 import com.whosin.actors.BaseActorTest
-import com.whosin.telegram.AkkaBotBaseSupport.CommandHandler
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{Matchers, WordSpec}
 
@@ -14,9 +13,7 @@ import scala.concurrent.Future
 /**
   * @author tony
   */
-class AkkaBotBaseSupportTest
-  extends BaseActorTest("AkkaBotBaseSupportTest")
-    with MockFactory {
+class BotHelpersTest extends BaseActorTest("BotHelpersTest") with MockFactory {
 
   "addCommand" should {
 
@@ -73,7 +70,7 @@ class AkkaBotBaseSupportTest
   }
 
   class MockAkkaBot(onReply: String => Unit)
-    extends TelegramBot with AkkaBotBaseSupport {
+    extends TelegramBot with BotHelpers {
 
     override val client = new AkkaHttpClient("token")
 
