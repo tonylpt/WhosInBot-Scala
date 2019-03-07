@@ -8,7 +8,7 @@ import com.whosin.actors.ChatThreadManager
 import com.whosin.telegram.WhosInBot
 
 import scala.concurrent.Await
-import scala.concurrent.duration.Duration
+import scala.concurrent.duration._
 
 /**
   * @author tonyl
@@ -16,22 +16,34 @@ import scala.concurrent.duration.Duration
 
 // $COVERAGE-OFF$
 
-object Main extends App with StrictLogging {
-  val config = ConfigFactory.load()
+object Main extends App with MainSupport {
 
-  implicit val system: ActorSystem = ActorSystem()
-  val materializer = ActorMaterializer()
+  Runtime.getRuntime.addShutdownHook(new Thread(() => stopApp()))
 
-  val manager = system.actorOf(ChatThreadManager.props(), "chat-manager")
-  val bot = new WhosInBot(config.getString("telegram.token"), system, materializer, manager)
-  val eol = bot.run()
+  runApp()
+}
 
-  Runtime.getRuntime.addShutdownHook(new Thread {
-    override def run(): Unit = bot.shutdown()
-  })
+trait MainSupport extends StrictLogging {
+  private val config = ConfigFactory.load()
 
-  logger.info("Bot is started.")
-  Await.result(eol, Duration.Inf)
+  private val system = ActorSystem()
+  private val materializer = ActorMaterializer()(system)
+
+  private val manager = system.actorOf(ChatThreadManager.props(), "chat-manager")
+  private val bot = new WhosInBot(config.getString("telegram.token"),
+    system, materializer, manager)
+
+  def runApp(): Unit = {
+    val eol = bot.run()
+    logger.info("Bot is started.")
+    Await.result(eol, Duration.Inf)
+  }
+
+  def stopApp(): Unit = {
+    bot.shutdown()
+    materializer.shutdown()
+    Await.result(system.terminate(), 5.second)
+  }
 }
 
 // $COVERAGE-ON$
