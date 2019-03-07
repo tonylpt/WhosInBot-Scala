@@ -32,6 +32,11 @@ class ViewTest extends WordSpecLike with Matchers {
       getReplyText(input) should include("Roll call ended")
     }
 
+    "return correct result on UpdateTitleResponse" in {
+      val input = UpdateTitleResponse(0, fixture.call)
+      getReplyText(input) should include("Roll call title set.")
+    }
+
     "return correct result on UpdateQuietResponse with quiet = false" in {
       val input = UpdateQuietResponse(0, fixture.call, fixture.responses)
       val result = getReplyText(input)
@@ -79,7 +84,7 @@ class ViewTest extends WordSpecLike with Matchers {
       result should include("User 3 (won't come)")
     }
 
-    "return correct result on GetAllAttendanceResponse" in {
+    "return correct result on GetAllAttendanceResponse when quiet = false" in {
       val input = GetAllAttendanceResponse(0, fixture.call, fixture.responses)
       val result = getReplyText(input)
 
@@ -91,6 +96,17 @@ class ViewTest extends WordSpecLike with Matchers {
       result should include("User 2 (might come)")
       result should include("User 3 (won't come)")
     }
+
+    "return correct result on GetAllAttendanceResponse when quiet = true" in {
+      val input = GetAllAttendanceResponse(0, fixture.call.copy(quiet = true), fixture.responses)
+      val result = getReplyText(input)
+
+      result should not include "User 1 (will come)"
+      result should not include "User 2 (might come)"
+      result should not include "User 3 (won't come)"
+      result should include("Total: 1 in, 1 out, 1 might come.")
+    }
+
   }
 
   object fixture {
