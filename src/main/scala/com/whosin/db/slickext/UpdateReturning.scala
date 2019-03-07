@@ -14,6 +14,9 @@ import scala.language.existentials
   * This is to add support for PostgreSQL's UPDATE with RETURNING.
   * From https://github.com/shiraeeshi/slick-update-returning-example
   */
+
+// $COVERAGE-OFF$
+
 object UpdateReturning {
 
   implicit class UpdateReturningInvoker[E, U, C[_]](updateQuery: Query[E, U, C]) {
@@ -69,3 +72,5 @@ object UpdateReturning {
   }
 
 }
+
+// $COVERAGE-ON$

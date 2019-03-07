@@ -14,6 +14,8 @@ import scala.concurrent.duration.Duration
   * @author tonyl
   */
 
+// $COVERAGE-OFF$
+
 object Main extends App with StrictLogging {
   val config = ConfigFactory.load()
 
@@ -31,3 +33,5 @@ object Main extends App with StrictLogging {
   logger.info("Bot is started.")
   Await.result(eol, Duration.Inf)
 }
+
+// $COVERAGE-ON$

@@ -10,8 +10,12 @@ import slick.jdbc.JdbcCapabilities
   * @author tonyl
   */
 
+// $COVERAGE-OFF$
+
 class ExtendedPostgresProfile extends ExPostgresProfile {
   override def computeCapabilities: Set[Capability] = {
     super.computeCapabilities + JdbcCapabilities.insertOrUpdate
   }
 }
+
+// $COVERAGE-ON$
