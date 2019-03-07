@@ -21,6 +21,8 @@ object View {
   }
 
   def getReplyText(r: CommandResponse): String = r match {
+    // Note: exhaustive check will be disabled when there is a guard
+
     case _: CommandFailure =>
       "An error has occurred. Please try again later."
 
@@ -36,11 +38,12 @@ object View {
     case UpdateTitleResponse(_, _) =>
       "Roll call title set."
 
-    case UpdateQuietResponse(_, call, _) if call.quiet =>
-      "Ok fine, I'll be quiet. \uD83E\uDD10"
-
     case UpdateQuietResponse(_, call, responses) =>
-      s"Sure. \uD83D\uDE03\n\n${listResponses(call, responses)}"
+      if (call.quiet) {
+        "Ok fine, I'll be quiet. \uD83E\uDD10"
+      } else {
+        s"Sure. \uD83D\uDE03\n\n${listResponses(call, responses)}"
+      }
 
     case UpdateAttendanceSelfResponse(_, username, status, call, responses) =>
       s"${announceAttendance(username, status)}\n\n${listResponses(call, responses)}"
@@ -50,8 +53,6 @@ object View {
 
     case GetAllAttendanceResponse(_, call, responses) =>
       withTitle(call, listResponses(call, responses))
-
-    case _ => throw new UnsupportedOperationException("Unrecognized response.")
   }
 
   private def announceAttendance(username: String, attendance: AttendanceStatus): String = attendance match {
