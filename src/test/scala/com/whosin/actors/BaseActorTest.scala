@@ -1,6 +1,7 @@
 package com.whosin.actors
 
 import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
 import akka.testkit.{TestKit, TestProbe}
 import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, Matchers, WordSpecLike}
 
@@ -14,7 +15,10 @@ abstract class BaseActorTest(name: String) extends TestKit(ActorSystem(name))
   with BeforeAndAfter
   with BeforeAndAfterAll {
 
+  protected implicit val materializer: ActorMaterializer = ActorMaterializer()
+
   override final protected def afterAll(): Unit = {
+    materializer.shutdown()
     shutdown(system)
   }
 }

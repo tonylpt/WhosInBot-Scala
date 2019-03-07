@@ -1,9 +1,13 @@
 package com.whosin.db
 
+import java.sql.Timestamp
+import java.util.Date
+
+import com.whosin.db.RollCallResponsesSupport.{Row, _}
 import com.whosin.db.Util.{cleanDB, _}
 import com.whosin.db.profile.api._
 import com.whosin.domain.AttendanceStatus.{In, Maybe, Out}
-import com.whosin.domain.{RollCall, RollCallResponse}
+import com.whosin.domain.{AttendanceStatus, RollCall, RollCallResponse}
 import org.scalatest.{BeforeAndAfter, Matchers, WordSpec}
 
 /**
@@ -69,4 +73,31 @@ class RollCallResponsesTest extends WordSpec with Matchers with BeforeAndAfter {
     }
   }
 
+}
+
+class RollCallResponsesSupportTest extends WordSpec with Matchers with BeforeAndAfter {
+
+  "rowToDomain" should {
+    "map row to domain correctly" in {
+      val now = new Date()
+      val row: Row = (Some(1), 2L, "unique", 3L, "User", "IN", "will come",
+        new Timestamp(now.getTime), new Timestamp(now.getTime))
+
+      val result = rowToDomain(row)
+
+      result shouldEqual RollCallResponse(Some(1), 3L, "User", AttendanceStatus.In, "will come", "unique", 2L, now, now)
+    }
+  }
+
+  "domainToRow" should {
+    "map domain to row correctly" in {
+      val now = new Date()
+      val domain = RollCallResponse(Some(1), 3L, "User", AttendanceStatus.In, "will come", "unique", 2L, now, now)
+
+      val result = domainToRow(domain)
+
+      result shouldEqual Some(Some(1), 2L, "unique", 3L, "User", "IN", "will come",
+        new Timestamp(now.getTime), new Timestamp(now.getTime))
+    }
+  }
 }

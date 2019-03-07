@@ -172,6 +172,11 @@ class ChatActorTest extends BaseActorTest("ChatActorTest") with MockFactory {
       chatActor.tell(UpdateQuiet(chatId, newQuiet), probe.ref)
       probe.expectMsg(CommandFailure(chatId, databaseError))
     }
+
+    "not reply if message is not recognized" in {
+      chatActor.tell("unknown message", probe.ref)
+      probe.expectNoMessage()
+    }
   }
 
   "when receive UpdateAttendanceSelf" should {

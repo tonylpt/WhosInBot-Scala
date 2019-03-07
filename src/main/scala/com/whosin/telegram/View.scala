@@ -12,9 +12,6 @@ import com.whosin.domain.{RollCall, RollCallResponse}
 
 object View {
 
-  implicit val localDateTimeOrdering: Ordering[LocalDateTime] =
-    Ordering.by(_.toInstant(ZoneOffset.UTC).toEpochMilli)
-
   def getAvailableCommands(commands: List[String]): String = {
     ("Available commands:" +:
       commands.map(s => s" \uD83C\uDF7A /$s")).mkString("\n")

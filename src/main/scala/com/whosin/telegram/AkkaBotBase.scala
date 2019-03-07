@@ -3,10 +3,12 @@ package com.whosin.telegram
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import com.bot4s.telegram.api.declarative.Commands
-import com.bot4s.telegram.api.{Polling, TelegramBot}
+import com.bot4s.telegram.api.{BotBase, BotExecutionContext, Polling, TelegramBot}
 import com.bot4s.telegram.clients.AkkaHttpClient
 import com.bot4s.telegram.models.Message
 import com.whosin.domain._
+import com.whosin.telegram.AkkaBotBaseSupport.CommandHandler
+import slogging.StrictLogging
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
@@ -15,16 +17,29 @@ import scala.util.{Failure, Success}
   * @author tonyl
   */
 
+// $COVERAGE-OFF$
+
 class AkkaBotBase(token: String,
                   implicit private val system: ActorSystem,
                   implicit private val materializer: ActorMaterializer)
+
   extends TelegramBot
     with Polling
-    with Commands {
+    with AkkaBotBaseSupport {
 
-  protected type CommandHandler = ParsedCommand => Future[String]
+  override val client = new AkkaHttpClient(token)
+}
 
-  protected def addCommand(s: Symbol)(handler: CommandHandler): Unit = {
+// $COVERAGE-ON$
+
+object AkkaBotBaseSupport {
+  type CommandHandler = ParsedCommand => Future[String]
+}
+
+trait AkkaBotBaseSupport extends Commands with StrictLogging {
+  this: BotBase with BotExecutionContext =>
+
+  def addCommand(s: Symbol)(handler: CommandHandler): Unit = {
     onCommand(s) { implicit msg =>
       ParsedCommand.from(msg) match {
         case None =>
@@ -45,8 +60,6 @@ class AkkaBotBase(token: String,
   protected implicit def toFuture(string: String): Future[String] = {
     Future.successful(string)
   }
-
-  override val client = new AkkaHttpClient(token)
 }
 
 case class ParsedCommand(chatId: ChatId,

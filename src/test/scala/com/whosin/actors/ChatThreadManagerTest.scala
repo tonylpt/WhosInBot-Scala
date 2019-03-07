@@ -2,7 +2,7 @@ package com.whosin.actors
 
 import akka.actor.{Actor, Props}
 import akka.testkit.TestProbe
-import com.whosin.actors.ChatCommands.{StartRollCall, StartRollCallResponse}
+import com.whosin.actors.ChatCommands.{EndRollCall, EndRollCallResponse, StartRollCall, StartRollCallResponse}
 import com.whosin.domain.ChatId
 
 import scala.concurrent.duration._
@@ -34,6 +34,20 @@ class ChatThreadManagerTest extends BaseActorTest("ChatThreadManagerTest") {
       chatActor1 should not be chatActor2
     }
 
+    "forward message to the child associated with the chat ID" in {
+      val manager = system.actorOf(ChatThreadManager.props(500.millis, MockChatActor.props))
+
+      manager.tell(StartRollCall(1, "title 1"), probe.ref)
+      probe.expectMsg(StartRollCallResponse(1))
+      val createdChatActor1 = probe.lastSender
+
+      manager.tell(EndRollCall(1), probe.ref)
+      probe.expectMsg(EndRollCallResponse(1))
+      val existingChatActor1 = probe.lastSender
+
+      existingChatActor1 shouldBe createdChatActor1
+    }
+
     "automatically kill child actor after an idle period" in {
       val manager = system.actorOf(ChatThreadManager.props(500.millis, MockChatActor.props))
 
@@ -53,6 +67,8 @@ class ChatThreadManagerTest extends BaseActorTest("ChatThreadManagerTest") {
     override def receive: Receive = {
       case StartRollCall(`chatId`, _) =>
         sender() ! StartRollCallResponse(chatId)
+      case EndRollCall(`chatId`) =>
+        sender() ! EndRollCallResponse(chatId)
     }
   }
 

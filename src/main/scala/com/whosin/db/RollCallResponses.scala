@@ -46,8 +46,6 @@ class RollCallResponses(tag: Tag) extends Table[RollCallResponse](tag, "w_roll_c
     (id.?, rollCallId, uniqueToken, userId, username, status, reason, createdAt, updatedAt).shaped <>
       (rowToDomain, domainToRow)
 
-  def rollCall = foreignKey("FK_ROLL_CALL_RESPONSES", rollCallId, rollCalls)(_.id)
-
 }
 
 object RollCallResponses extends RollCallResponseRepo {

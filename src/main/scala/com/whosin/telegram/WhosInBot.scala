@@ -6,6 +6,8 @@ import akka.stream.ActorMaterializer
 import akka.util.Timeout
 import com.whosin.actors.ChatCommands._
 import com.whosin.domain.AttendanceStatus._
+import com.whosin.telegram.AkkaBotBaseSupport.CommandHandler
+import com.whosin.telegram.WhosInBotSupport.NameAndReason
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -101,6 +103,10 @@ private[telegram] trait WhosInBotSupport {
     }
   }
 
+}
+
+object WhosInBotSupport {
+
   /** Encapsulates name and reason for setting attendance on behalf of someone else. */
   case class NameAndReason(name: String, reason: String)
 
@@ -108,7 +114,7 @@ private[telegram] trait WhosInBotSupport {
     private val regex = """^(\S+)\s*(.*)$""".r
 
     def unapply(arg: String): Option[(String, String)] = arg match {
-      case regex(name, reason) => Some((name, reason))
+      case regex(name, reason) => Some((name, reason.trim))
       case _ => None
     }
   }
