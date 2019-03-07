@@ -1,6 +1,7 @@
 # WhosInBot Scala
 
 [![Build Status](https://travis-ci.org/tonylpt/WhosInBot-Scala.svg?branch=master)](https://travis-ci.org/tonylpt/WhosInBot-Scala)
+[![coverage](https://img.shields.io/codecov/c/github/tonylpt/WhosInBot-Scala.svg)](https://codecov.io/gh/tonylpt/WhosInBot-Scala)
 
 This is a rewrite of the [WhosInBot](https://github.com/col/whos_in_bot) in Scala. 
 It serves as a playground for the Scala language and ecosystem, including Akka and Slick.
