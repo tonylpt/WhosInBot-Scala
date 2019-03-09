@@ -1,7 +1,6 @@
 package com.whosin.actors
 
-import com.whosin.domain.AttendanceStatus.AttendanceStatus
-import com.whosin.domain.{ChatId, RollCall, RollCallResponse, UserId}
+import com.whosin.domain._
 
 /**
   * @author tony

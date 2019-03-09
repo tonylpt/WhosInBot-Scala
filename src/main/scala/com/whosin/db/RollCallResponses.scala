@@ -75,14 +75,14 @@ object RollCallResponses extends RollCallResponseRepo {
           VALUES (
           ${u.rollCallId}, ${u.uniqueToken},
           ${u.userId}, ${u.username},
-          ${u.status.toString}, ${u.reason},
+          ${u.status.entryName}, ${u.reason},
           $nowTs, $nowTs)
 
           ON CONFLICT (roll_call_id, unique_token)
           DO UPDATE SET
             user_id = ${u.userId},
             user_name = ${u.username},
-            status = ${u.status.toString},
+            status = ${u.status.entryName},
             reason = ${u.reason},
             updated_at = $nowTs
 
@@ -112,7 +112,7 @@ object RollCallResponsesSupport {
   def domainToRow(c: RollCallResponse): Option[Row] = Some(
     c.id, c.rollCallId, c.uniqueToken,
     c.userId, c.username,
-    c.status.toString, c.reason,
+    c.status.entryName, c.reason,
     c.createdAt.toTimestamp, c.updatedAt.toTimestamp
   )
 }

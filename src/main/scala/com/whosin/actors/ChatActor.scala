@@ -4,7 +4,6 @@ import akka.actor.{Actor, ActorLogging, Props}
 import akka.pattern.pipe
 import com.whosin.actors.ChatCommands._
 import com.whosin.db.{RollCallRepo, RollCallResponseRepo, RollCallResponses, RollCalls}
-import com.whosin.domain.AttendanceStatus.AttendanceStatus
 import com.whosin.domain._
 
 import scala.concurrent.ExecutionContext.Implicits.global

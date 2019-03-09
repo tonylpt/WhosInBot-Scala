@@ -1,10 +1,8 @@
 package com.whosin.telegram
 
-import java.time.{LocalDateTime, ZoneOffset}
-
 import com.whosin.actors.ChatCommands._
 import com.whosin.domain.AttendanceStatus._
-import com.whosin.domain.{RollCall, RollCallResponse}
+import com.whosin.domain.{AttendanceStatus, RollCall, RollCallResponse}
 
 /**
   * @author tonyl
@@ -56,7 +54,6 @@ object View {
     case In => s"$username is in!"
     case Out => s"$username is out!"
     case Maybe => s"$username might come!"
-    case _ => throw new MatchError(s"Invalid attendance value: $attendance")
   }
 
   private def withTitle(rollCall: RollCall, body: String): String = {

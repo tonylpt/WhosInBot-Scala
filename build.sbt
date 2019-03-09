@@ -38,6 +38,7 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "jul-to-slf4j" % "1.7.25",
   "ch.qos.logback" % "logback-classic" % "1.2.3",
   "io.sentry" % "sentry-logback" % "1.7.16",
+  "com.beachape" %% "enumeratum" % "1.5.13",
 
   "com.bot4s" %% "telegram-core" % "4.0.0-RC2" excludeAll ExclusionRule(organization = "org.scalaj"),
   "com.bot4s" %% "telegram-akka" % "4.0.0-RC2" excludeAll ExclusionRule(organization = "com.typesafe.akka"),

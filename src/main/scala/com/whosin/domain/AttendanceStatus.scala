@@ -1,14 +1,25 @@
 package com.whosin.domain
 
+import enumeratum._
+
+import scala.collection.immutable.IndexedSeq
+
 /**
   * @author tonyl
   */
 
-//noinspection TypeAnnotation
-object AttendanceStatus extends Enumeration {
-  val In = Value("IN")
-  val Out = Value("OUT")
-  val Maybe = Value("MAYBE")
+sealed abstract class AttendanceStatus(override val entryName: String) extends EnumEntry {
+  override def toString: String = entryName
+}
 
-  type AttendanceStatus = Value
+object AttendanceStatus extends Enum[AttendanceStatus] {
+
+  case object In extends AttendanceStatus("IN")
+
+  case object Out extends AttendanceStatus("OUT")
+
+  case object Maybe extends AttendanceStatus("MAYBE")
+
+  override val values: IndexedSeq[AttendanceStatus] = findValues
+
 }

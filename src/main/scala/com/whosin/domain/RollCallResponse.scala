@@ -3,7 +3,6 @@ package com.whosin.domain
 import java.util.Date
 
 import com.roundeights.hasher.Implicits._
-import com.whosin.domain.AttendanceStatus.AttendanceStatus
 import com.whosin.domain.Util._
 
 /**

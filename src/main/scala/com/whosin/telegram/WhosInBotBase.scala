@@ -5,7 +5,8 @@ import akka.pattern.ask
 import akka.util.Timeout
 import com.bot4s.telegram.api.{BotBase, BotExecutionContext}
 import com.whosin.actors.ChatCommands._
-import com.whosin.domain.AttendanceStatus.{AttendanceStatus, In, Maybe, Out}
+import com.whosin.domain.AttendanceStatus
+import com.whosin.domain.AttendanceStatus.{In, Maybe, Out}
 import com.whosin.telegram.BotHelpers.CommandHandler
 
 import scala.concurrent.duration._
