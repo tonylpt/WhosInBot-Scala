@@ -42,6 +42,7 @@ Refer to the original [WhosInBot](https://github.com/col/whos_in_bot/blob/master
 - [SBT](https://www.scala-sbt.org/1.0/docs/Setup.html)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
+
 ### Setup
 1. [Create a Telegram bot](https://core.telegram.org/bots#creating-a-new-bot) for development and obtain the authorization token.
 2. Copy `src/main/resources/application.template.conf` to `src/main/resources/application.conf` and fill in the Telegram token.        
@@ -51,29 +52,26 @@ Refer to the original [WhosInBot](https://github.com/col/whos_in_bot/blob/master
         
    This automatically creates `whosin_dev` and `whosin_test` databases.
    
+   
 ### Run with SBT
 1. Apply dev database migrations:
 
-        sbt flywayMigrate
+        sbt "run migrate"
         
-2. Apply test database migrations:
-
-        sbt test:flywayMigrate
-        
-3. Run tests:
+2. Run tests (which automatically applies migrations on the test database):
 
         sbt test
         
-4. Run the app locally:
+3. Run the app:
 
         sbt run
         
 
 ### Run from JAR
 1. Make sure `src/main/resources/application.conf` has the correct values.
-2. Make sure the test database is running with migrations applied:
+2. Make sure the test database is running:
 
-        sbt test:flywayMigrate
+        docker-compose up -d
         
 3. Build the JAR:
 
@@ -83,7 +81,7 @@ Refer to the original [WhosInBot](https://github.com/col/whos_in_bot/blob/master
     
 4. Apply database migrations:
 
-        sbt flywayMigrate
+        java -jar target/scala-2.12/WhosInBot-Scala.jar migrate
         
 5. Run the app:        
        
