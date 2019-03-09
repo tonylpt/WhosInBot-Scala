@@ -4,7 +4,7 @@ import java.sql.Timestamp
 import java.util.Date
 
 import com.whosin.db.RollCallResponsesSupport.{Row, _}
-import com.whosin.db.Util.{cleanDB, _}
+import com.whosin.db.Util._
 import com.whosin.db.profile.api._
 import com.whosin.domain.AttendanceStatus.{In, Maybe, Out}
 import com.whosin.domain.{AttendanceStatus, RollCall, RollCallResponse}
@@ -13,7 +13,10 @@ import org.scalatest.{BeforeAndAfter, Matchers, WordSpec}
 /**
   * @author tonyl
   */
-class RollCallResponsesTest extends WordSpec with Matchers with BeforeAndAfter {
+class RollCallResponsesTest extends WordSpec
+  with Matchers
+  with BeforeAndAfter
+  with DatabaseTest {
 
   var call: RollCall = _
 

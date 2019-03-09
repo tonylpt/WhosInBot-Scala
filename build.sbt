@@ -39,6 +39,7 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % "1.2.3",
   "io.sentry" % "sentry-logback" % "1.7.16",
   "com.beachape" %% "enumeratum" % "1.5.13",
+  "com.github.scopt" %% "scopt" % "4.0.0-RC2",
 
   "com.bot4s" %% "telegram-core" % "4.0.0-RC2" excludeAll ExclusionRule(organization = "org.scalaj"),
   "com.bot4s" %% "telegram-akka" % "4.0.0-RC2" excludeAll ExclusionRule(organization = "com.typesafe.akka"),
@@ -48,6 +49,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick-hikaricp" % "3.3.0",
   "com.github.tminglei" %% "slick-pg" % "0.17.2",
   "com.zaxxer" % "HikariCP" % "3.3.0",
+  "org.flywaydb" % "flyway-core" % "5.2.4",
 
   "com.roundeights" %% "hasher" % "1.2.0",
   "org.scala-lang.modules" %% "scala-async" % "0.9.7",

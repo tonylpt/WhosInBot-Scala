@@ -11,7 +11,10 @@ import scala.concurrent.Future
 /**
   * @author tonyl
   */
-class RollCallsTest extends WordSpec with Matchers with BeforeAndAfter {
+class RollCallsTest extends WordSpec
+  with Matchers
+  with BeforeAndAfter
+  with DatabaseTest {
 
   before {
     cleanDB()
