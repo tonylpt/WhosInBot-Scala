@@ -1,6 +1,6 @@
 package com.whosin.domain
 
-import enumeratum._
+import enumeratum.{Enum, EnumEntry}
 
 import scala.collection.immutable.IndexedSeq
 

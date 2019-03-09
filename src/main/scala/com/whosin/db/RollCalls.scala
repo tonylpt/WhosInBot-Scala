@@ -49,7 +49,7 @@ class RollCalls(tag: Tag) extends Table[RollCall](tag, "w_roll_calls") {
         case (id, chatId, status, title, quiet, createdAt, updatedAt) =>
           RollCall(id, chatId, RollCallStatus.withName(status), title, quiet, createdAt.toDate, updatedAt.toDate)
       }, { c: RollCall =>
-        Some((c.id, c.chatId, c.status.toString, c.title, c.quiet,
+        Some((c.id, c.chatId, c.status.entryName, c.title, c.quiet,
           c.createdAt.toTimestamp, c.updatedAt.toTimestamp))
       })
   }
@@ -64,19 +64,19 @@ object RollCalls extends RollCallRepo {
   private def openCallQuery(chatId: ChatId) = {
     rollCalls.filter { row =>
       row.chatId === chatId &&
-        row.status === RollCallStatus.Open.toString
+        row.status === RollCallStatus.Open.entryName
     }
   }
 
   private def closeAllCalls(chatId: ChatId) = {
     val status = openCallQuery(chatId).map(_.status)
-    status.update(RollCallStatus.Closed.toString)
+    status.update(RollCallStatus.Closed.entryName)
   }
 
   private def deleteOldCalls(chatId: ChatId, numToKeep: Int) = {
     val latestKeepRows = rollCalls
       .filter { row =>
-        row.chatId === chatId && row.status === RollCallStatus.Closed.toString
+        row.chatId === chatId && row.status === RollCallStatus.Closed.entryName
       }
       .sortBy(_.createdAt.desc)
       .take(numToKeep)

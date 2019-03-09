@@ -32,12 +32,12 @@ class RollCallsTest extends WordSpec with Matchers with BeforeAndAfter {
 
     "close all existing calls" in {
       RollCalls.insertAndCleanUp(1, "a new call 1").await()
-      val calls = awaitDB(rollCalls.filter(_.status === Open.toString).result)
+      val calls = awaitDB(rollCalls.filter(_.status === Open.entryName).result)
       calls.size shouldEqual 1
       calls.head.title shouldEqual "a new call 1"
 
       RollCalls.insertAndCleanUp(1, "a new call 2").await()
-      val calls2 = awaitDB(rollCalls.filter(_.status === Open.toString).result)
+      val calls2 = awaitDB(rollCalls.filter(_.status === Open.entryName).result)
       calls2.size shouldEqual 1
       calls2.head.title shouldEqual "a new call 2"
     }
@@ -56,10 +56,10 @@ class RollCallsTest extends WordSpec with Matchers with BeforeAndAfter {
   "closeCurrent" should {
     "close the current call" in {
       RollCalls.insertAndCleanUp(0, "call 1").await()
-      awaitDB(rollCalls.filter(_.status === Open.toString).result).size shouldEqual 1
+      awaitDB(rollCalls.filter(_.status === Open.entryName).result).size shouldEqual 1
 
       RollCalls.closeCurrent(0)
-      awaitDB(rollCalls.filter(_.status === Open.toString).result).size shouldEqual 0
+      awaitDB(rollCalls.filter(_.status === Open.entryName).result).size shouldEqual 0
     }
   }
 
