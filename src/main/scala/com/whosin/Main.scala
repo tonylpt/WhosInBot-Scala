@@ -7,7 +7,7 @@ import com.typesafe.scalalogging.StrictLogging
 import com.whosin.actors.ChatThreadManager
 import com.whosin.telegram.WhosInBot
 
-import scala.concurrent.Await
+import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 
 /**
@@ -16,14 +16,16 @@ import scala.concurrent.duration._
 
 // $COVERAGE-OFF$
 
-object Main extends App with MainSupport {
+object Main extends App {
 
-  Runtime.getRuntime.addShutdownHook(new Thread(() => stopApp()))
+  private val app = new BotApp()
 
-  runApp()
+  Runtime.getRuntime.addShutdownHook(new Thread(() => app.stop()))
+
+  app.run()
 }
 
-trait MainSupport extends StrictLogging {
+class BotApp extends StrictLogging {
   private val config = ConfigFactory.load()
 
   private val system = ActorSystem()
@@ -33,16 +35,21 @@ trait MainSupport extends StrictLogging {
   private val bot = new WhosInBot(config.getString("telegram.token"),
     system, materializer, manager)
 
-  def runApp(): Unit = {
+  def run(): Unit = {
     val eol = bot.run()
     logger.info("Bot is started.")
     Await.result(eol, Duration.Inf)
   }
 
-  def stopApp(): Unit = {
+  def stop(): Unit = {
+    logger.info("Shutting down...")
+
     bot.shutdown()
+    logger.info("Bot is shut down.")
+
     materializer.shutdown()
     Await.result(system.terminate(), 5.second)
+    logger.info("Actor system is shut down.")
   }
 }
 
