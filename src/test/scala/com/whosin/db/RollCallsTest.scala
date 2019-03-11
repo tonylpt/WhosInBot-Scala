@@ -50,9 +50,12 @@ class RollCallsTest extends WordSpec
         RollCalls.insertAndCleanUp(0, s"a new call $i")
       }).await()
 
+      // ensure do not delete from other chat IDs
+      RollCalls.insertAndCleanUp(1, s"a new call 21").await()
+
       val calls = awaitDB(rollCalls.result)
-      calls.size shouldEqual (RollCalls.CleanupThreshold + 1)
-      calls.map(_.title) shouldEqual (10 to 20).map(i => s"a new call $i")
+      calls.size shouldEqual (RollCalls.CleanupThreshold + 2)
+      calls.map(_.title) shouldEqual (10 to 21).map(i => s"a new call $i")
     }
   }
 

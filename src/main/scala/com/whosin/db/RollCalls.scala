@@ -84,7 +84,9 @@ object RollCalls extends RollCallRepo {
       .map(_.createdAt)
       .min
     rollCalls
-      .filter(_.createdAt < earliestCreatedAt)
+      .filter { row =>
+        row.chatId === chatId && row.createdAt < earliestCreatedAt
+      }
       .delete
   }
 
