@@ -44,7 +44,7 @@ Refer to the original [WhosInBot](https://github.com/col/whos_in_bot/blob/master
 ### Setup
 1. [Create a Telegram bot](https://core.telegram.org/bots#creating-a-new-bot) for development and obtain the authorization token.
 2. Copy `src/main/resources/application.template.conf` to `src/main/resources/application.conf` and fill in the Telegram token.        
-3. Start the development PostgreSQL and Redis with Docker Compose:
+3. Start the development PostgreSQL with Docker Compose:
 
         docker-compose up -d
         
