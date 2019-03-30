@@ -1,4 +1,4 @@
-# WhosInBot Scala
+# WhosInBot - Scala
 
 [![Build Status](https://travis-ci.org/tonylpt/WhosInBot-Scala.svg?branch=master)](https://travis-ci.org/tonylpt/WhosInBot-Scala)
 [![coverage](https://img.shields.io/codecov/c/github/tonylpt/WhosInBot-Scala.svg)](https://codecov.io/gh/tonylpt/WhosInBot-Scala)
@@ -7,7 +7,7 @@ This is a rewrite of the [WhosInBot](https://github.com/col/whos_in_bot) in Scal
 It serves as a playground for the Scala language and ecosystem, including Akka and Slick.
 The choice of technologies for this project is more experimental than pragmatic. 
 
-Check out the Clojure version [here](https://github.com/tonylpt/WhosInBot-Clojure).
+Check out the [Clojure](https://github.com/tonylpt/WhosInBot-Clojure), [Rust](https://github.com/tonylpt/WhosInBot-Rust), and Col's original [Elixir](https://github.com/col/whos_in_bot) and [Go](https://github.com/col/whosinbot) versions.
 
   
 ## Usage
@@ -46,7 +46,7 @@ Refer to the original [WhosInBot](https://github.com/col/whos_in_bot/blob/master
 ### Setup
 1. [Create a Telegram bot](https://core.telegram.org/bots#creating-a-new-bot) for development and obtain the authorization token.
 2. Copy `src/main/resources/application.template.conf` to `src/main/resources/application.conf` and fill in the Telegram token.        
-3. Start the development PostgreSQL and Redis with Docker Compose:
+3. Start the development PostgreSQL with Docker Compose:
 
         docker-compose up -d
         
